@@ -80,7 +80,7 @@ describe('Fundraising', () => {
     }
   })
 
-  it.only('manager can create request', async () => {
+  it('manager can create request', async () => {
     const reqDesc = 'buy something'
     await fundraising.methods.createRequest(reqDesc, '100', accounts[1])
     .send({
@@ -90,5 +90,35 @@ describe('Fundraising', () => {
 
     const request = await fundraising.methods.requests(0).call()
     assert.equal(reqDesc, request.description)
+  })
+
+  it('processes request', async () => {
+    await fundraising.methods.invest().send({
+      value: web3.utils.toWei('10', 'ether'),
+      from: accounts[1]
+    })
+
+    await fundraising.methods.createRequest('buy something', web3.utils.toWei('5', 'ether'), accounts[2])
+    .send({
+      from: accounts[0],
+      gas: '1500000'
+    })
+
+    await fundraising.methods.approveRequest(0).send({
+      from: accounts[1],
+      gas: '1500000'
+    })
+
+    await fundraising.methods.finishRequest(0).send({
+      from: accounts[0],
+      gas: '1500000'
+    })
+
+    let balance = await web3.eth.getBalance(accounts[2])
+    balance = web3.utils.fromWei(balance, 'ether')
+    balance = parseFloat(balance)
+    console.log(balance)
+    // * it's close to 105 (actual is 104.9999)
+    assert(balance > 104)
   })
 })
