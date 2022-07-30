@@ -1,4 +1,5 @@
 import 'antd/dist/antd.css'
+import '../style/globals.css'
 import type { AppProps } from 'next/app'
 import Layout from '../layout'
 
