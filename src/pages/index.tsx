@@ -2,16 +2,11 @@
 import type { NextPage, GetStaticProps } from 'next'
 import React from 'react'
 import factory from '../../ethereum/factory'
-import { Card } from 'antd'
+import FundraisingList from '../feature/fundraisingList'
 
 const Home: NextPage<{ lists: Array<string> }> = (props) => (
   <>
-    <p>Hello World!!</p>
-    {props.lists.map((list) => (
-      <Card key={list} style={{ width: 300 }}>
-        <p>{list}</p>
-      </Card>
-    ))}
+    <FundraisingList lists={props.lists} />
   </>
 )
 
