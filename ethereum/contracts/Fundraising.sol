@@ -48,7 +48,6 @@ contract Fundraising {
     r.costOfRequest = value;
     r.isComplete = false;
     r.recipient = recipient;
-
   }
 
   function approveRequest(uint index) public {
@@ -68,6 +67,18 @@ contract Fundraising {
 
     request.recipient.transfer(request.costOfRequest);
     request.isComplete = true;
+  }
+
+  function getSummary() public view returns (
+    uint, uint, uint, uint, address
+  ) {
+    return (
+      minimumFundRaising,
+      address(this).balance,
+      numRequests,
+      investorCount,
+      manager
+    );
   }
 
   modifier requiredManager() {

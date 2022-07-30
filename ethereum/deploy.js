@@ -2,6 +2,8 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider')
 const Web3 = require('web3')
 const compiledFactory = require('../ethereum/build/FundraisingFactory.json')
+const fs = require('fs-extra')
+const path = require('path')
 
 const provider = new HDWalletProvider(env.process.PNEUMONIC, env.process.RINKEBY_ADDRESS)
 
@@ -15,6 +17,10 @@ const deploy = async () => {
     .send({ gas: '1800000', from: accounts[0] })
 
   console.log('success deploy contract to rinkby', result.options.address)
+
+  fs.removeSync(path.resolve(__dirname, 'ADDRESS'))
+
+  fs.outputJSONSync(path.resolve(__dirname, 'ADDRESS'), result.options.address)
 }
 
 deploy()
