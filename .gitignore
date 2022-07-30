@@ -9,8 +9,9 @@
 /coverage
 
 # production
+ethereum/build
 /build
-
+.next
 # misc
 .DS_Store
 *.pem

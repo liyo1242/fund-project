@@ -16,4 +16,7 @@
     //===========================================
     "emmet.triggerExpansionOnTab": true,
     "emmet.showAbbreviationSuggestions": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
   }

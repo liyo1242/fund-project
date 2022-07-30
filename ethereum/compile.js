@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const fs = require('fs-extra')
 const solc = require('solc')
@@ -27,10 +28,10 @@ const input = {
       },
     },
   },
-};
+}
 const output = JSON.parse(solc.compile(JSON.stringify(input)))
 fs.ensureDirSync(buildPath)
-for (let contractName in output.contracts[CONTRACT_FILE]) {
+for (const contractName in output.contracts[CONTRACT_FILE]) {
   fs.outputJSONSync(
     path.resolve(buildPath, contractName + '.json'),
     output.contracts[CONTRACT_FILE][contractName]
