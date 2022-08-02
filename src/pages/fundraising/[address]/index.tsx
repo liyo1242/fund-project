@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import type { NextPage, GetStaticPropsContext } from 'next'
-import getFundraisingInstance from '../../../../ethereum/fundraising'
-import factory from '../../../../ethereum/factory'
 import FundraisingDetail from '../../../feature/fundraisingDetail'
+import type { FundraisingSummary } from '../../../lib'
+import { getDeployedFundraising, getFundraisingSummaryByAddress } from '../../../lib'
 
-const FundraisingIndex: NextPage<{ detail: Array<[string, string]> }> = (props) => (
+const FundraisingIndex: NextPage<{
+  detail: FundraisingSummary
+}> = (props) => (
   <>
     <FundraisingDetail detail={props.detail} />
   </>
@@ -13,7 +15,7 @@ const FundraisingIndex: NextPage<{ detail: Array<[string, string]> }> = (props) 
 export default FundraisingIndex
 
 export const getStaticPaths = async () => {
-  const addresses: Array<string> = await factory.methods.getDeployedFundraising().call()
+  const addresses = await getDeployedFundraising()
 
   return {
     paths: addresses.map((address) => ({ params: { address } })),
@@ -24,9 +26,8 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context: GetStaticPropsContext<{ address: string }>) => {
   const { params } = context
   const { address = '' } = params || {}
-  const fundraisingDetail = await getFundraisingInstance(address).methods.getSummary().call()
-  const keys = ['minimumFundRaising', 'addressBalance', 'numRequests', 'investorCount', 'manager']
-  const result = Object.values(fundraisingDetail).map((val, ind) => [keys[ind], val])
+  const getFundraisingSummary = getFundraisingSummaryByAddress(address)
+  const result = await getFundraisingSummary()
   return {
     props: {
       detail: result,

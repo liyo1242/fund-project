@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import type { NextPage, GetStaticProps } from 'next'
 import React from 'react'
-import factory from '../../ethereum/factory'
 import FundraisingList from '../feature/fundraisingList'
+import { getDeployedFundraising } from '../lib'
 
 const Home: NextPage<{ lists: Array<string> }> = (props) => (
   <>
@@ -13,7 +13,7 @@ const Home: NextPage<{ lists: Array<string> }> = (props) => (
 export default Home
 
 export const getStaticProps: GetStaticProps = async () => {
-  const lists = await factory.methods.getDeployedFundraising().call()
+  const lists = await getDeployedFundraising()
   return {
     props: {
       lists,

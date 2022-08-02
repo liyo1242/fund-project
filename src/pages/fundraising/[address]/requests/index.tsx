@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import type { NextPage, GetStaticPropsContext } from 'next'
-import getFundraisingInstance from '../../../../../ethereum/fundraising'
-import factory from '../../../../../ethereum/factory'
+import type { FundraisingRequests } from '../../../../lib'
+import { getDeployedFundraising, getFundraisingRequestByAddress } from '../../../../lib'
 import FundraisingRequestList from '../../../../feature/fundraisingRequestList'
 
-const FundraisingRequest: NextPage<{ requests: Array<Array<[string, string]>> }> = (props) => (
+const FundraisingRequest: NextPage<{ requests: FundraisingRequests }> = (props) => (
   <>
     <FundraisingRequestList requests={props.requests} />
   </>
@@ -13,7 +13,7 @@ const FundraisingRequest: NextPage<{ requests: Array<Array<[string, string]>> }>
 export default FundraisingRequest
 
 export const getStaticPaths = async () => {
-  const addresses: Array<string> = await factory.methods.getDeployedFundraising().call()
+  const addresses: Array<string> = await getDeployedFundraising()
 
   return {
     paths: addresses.map((address) => ({ params: { address } })),
@@ -24,19 +24,8 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context: GetStaticPropsContext<{ address: string }>) => {
   const { params } = context
   const { address = '' } = params || {}
-  const fundraisingDetail = await getFundraisingInstance(address).methods.getSummary().call()
-  const requestCount: number = +fundraisingDetail[2]
-
-  const requests = await Promise.all(
-    Array.from(Array(requestCount).keys()).map((ind) =>
-      getFundraisingInstance(address).methods.requests(ind).call()
-    )
-  )
-
-  const result = requests.map((request) => {
-    const keys = ['description', 'costOfRequest', 'isComplete:', 'recipient', 'approverCount']
-    return keys.map((val, ind) => [val, request[ind]])
-  })
+  const getFundraisingRequest = getFundraisingRequestByAddress(address)
+  const result = await getFundraisingRequest()
 
   return {
     props: {
