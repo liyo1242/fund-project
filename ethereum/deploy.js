@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+require('dotenv').config({ path: './ethereum/.env' })
 const HDWalletProvider = require('@truffle/hdwallet-provider')
 const Web3 = require('web3')
 const compiledFactory = require('../ethereum/build/FundraisingFactory.json')
 const fs = require('fs-extra')
 const path = require('path')
 
-const provider = new HDWalletProvider(env.process.PNEUMONIC, env.process.RINKEBY_ADDRESS)
+const provider = new HDWalletProvider(process.env.PNEUMONIC, process.env.RINKEBY_ADDRESS)
 
 const web3 = new Web3(provider)
 

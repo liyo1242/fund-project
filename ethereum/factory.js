@@ -3,7 +3,7 @@ import FundraisingFactory from '../ethereum/build/FundraisingFactory.json'
 
 const instance = new web3.eth.Contract(
   FundraisingFactory.abi,
-  '0xD9d93B2aCFb3B9d0CC7A4e3A39c357F60FECAe3E'
+  '0x8Ce7Ee21eecFc0a5dB20aC8CcA649010Ced07E89'
 )
 
 export default instance
