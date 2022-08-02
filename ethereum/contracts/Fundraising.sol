@@ -3,8 +3,8 @@ pragma solidity ^0.8.9;
 contract FundraisingFactory {
   Fundraising[] public deployedFundraising;
 
-  function createFundraising(uint minimumFund) public {
-    Fundraising newFundraisingAddress = new Fundraising(minimumFund, msg.sender);
+  function createFundraising(string memory description, uint minimumFund) public {
+    Fundraising newFundraisingAddress = new Fundraising(description, minimumFund, msg.sender);
     deployedFundraising.push(newFundraisingAddress);
   }
 
@@ -23,14 +23,16 @@ contract Fundraising {
     mapping(address => bool) approvers;
   }
 
+  string description;
   address public manager;
   uint public minimumFundRaising;
   uint public investorCount;
   mapping(address => bool) public investors;
-  uint numRequests;
+  uint public numRequests;
   mapping(uint256 => Request) public requests;
 
-  constructor(uint minimumFund, address creator) {
+  constructor(string memory desc, uint minimumFund, address creator) {
+    description = desc;
     manager = creator;
     minimumFundRaising = minimumFund;
   }
@@ -41,9 +43,9 @@ contract Fundraising {
     investorCount++;
   }
 
-  function createRequest(string memory description, uint value, address payable recipient) public requiredManager {
+  function createRequest(string memory desc, uint value, address payable recipient) public requiredManager {
     Request storage r = requests[numRequests++];
-    r.description = description;
+    r.description = desc;
     r.approverCount = 0;
     r.costOfRequest = value;
     r.isComplete = false;
@@ -70,9 +72,10 @@ contract Fundraising {
   }
 
   function getSummary() public view returns (
-    uint, uint, uint, uint, address
+     string memory, uint, uint, uint, uint, address
   ) {
     return (
+      description,
       minimumFundRaising,
       address(this).balance,
       numRequests,
