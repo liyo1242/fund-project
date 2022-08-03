@@ -19,9 +19,9 @@ const deploy = async () => {
 
   console.log('success deploy contract to rinkby', result.options.address)
 
-  fs.removeSync(path.resolve(__dirname, 'ADDRESS'))
+  fs.removeSync(path.resolve(__dirname, 'ADDRESS.json'))
 
-  fs.outputJSONSync(path.resolve(__dirname, 'ADDRESS'), result.options.address)
+  fs.outputJSONSync(path.resolve(__dirname, 'ADDRESS.json'), { address: result.options.address })
 }
 
 deploy()
