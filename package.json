@@ -7,6 +7,7 @@
     "dev": "next dev",
     "test": "mocha",
     "compile": "node ethereum/compile.js",
+    "deploy": "node ethereum/compile.js && node ethereum/deploy.js",
     "lint:eslint": "eslint \"src/{pages,component,mock}/**/*.{js,ts,tsx}\" --fix",
     "lint:prettier": "prettier --write --loglevel warn \"src/{pages,component}/**/*.{js,json,ts,tsx,css,scss,html,md}\"",
     "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",

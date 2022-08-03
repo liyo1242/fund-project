@@ -36,4 +36,5 @@ for (const contractName in output.contracts[CONTRACT_FILE]) {
     path.resolve(buildPath, contractName + '.json'),
     output.contracts[CONTRACT_FILE][contractName]
   )
+  console.log('🙈 update build file', path.resolve(buildPath, contractName + '.json'))
 }

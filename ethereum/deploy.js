@@ -17,11 +17,15 @@ const deploy = async () => {
     .deploy({ data: compiledFactory.evm.bytecode.object })
     .send({ gas: '1800000', from: accounts[0] })
 
-  console.log('success deploy contract to rinkby', result.options.address)
+  console.log('🐵 success deploy contract to rinkby', result.options.address)
 
   fs.removeSync(path.resolve(__dirname, 'ADDRESS.json'))
 
-  fs.outputJSONSync(path.resolve(__dirname, 'ADDRESS.json'), { address: result.options.address })
+  fs.outputJSONSync(path.resolve(__dirname, 'ADDRESS.json'), {
+    address: result.options.address,
+  })
+
+  process.exit()
 }
 
 deploy()
