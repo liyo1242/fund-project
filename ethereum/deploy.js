@@ -6,7 +6,7 @@ const compiledFactory = require('../ethereum/build/FundraisingFactory.json')
 const fs = require('fs-extra')
 const path = require('path')
 
-const provider = new HDWalletProvider(process.env.PNEUMONIC, process.env.RINKEBY_ADDRESS)
+const provider = new HDWalletProvider(process.env.MNEMONIC, process.env.RINKEBY_ADDRESS)
 
 const web3 = new Web3(provider)
 
