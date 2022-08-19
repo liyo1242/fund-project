@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
-import { Card, Button } from 'antd'
+import { Card, Button, PageHeader } from 'antd'
 import { useRouter } from 'next/router'
 import type { FundraisingRequests } from '../lib'
 import useFundraising from '../hook/useFundraising'
@@ -29,14 +29,16 @@ const FundraisingRequestList = (props: PropsWithChildren<FundraisingRequestListP
 
   return (
     <>
-      <div>
-        <h2>Fundraising Request List</h2>
-        <Link href={`/fundraising/${address}/requests/new`}>
-          <Button type="primary">
-            <p>Add New Fundraising Request</p>
-          </Button>
-        </Link>
-      </div>
+      <PageHeader
+        title="Fundraising Request List"
+        extra={[
+          <Link key="1" href={`/fundraising/${address}/requests/new`}>
+            <Button type="primary">
+              <p>Add New Fundraising Request</p>
+            </Button>
+          </Link>,
+        ]}
+      />
       <div>
         {props.requests.map((request, ind) => (
           <Card key={request.title} title={request.title} bordered={false}>
@@ -61,9 +63,11 @@ const FundraisingRequestList = (props: PropsWithChildren<FundraisingRequestListP
             <Card
               title="approve"
               extra={
-                <Button onClick={() => handleApprove(ind)} type="primary">
-                  Approve
-                </Button>
+                !request.isComplete ? (
+                  <Button onClick={() => handleApprove(ind)} type="primary">
+                    Approve
+                  </Button>
+                ) : null
               }
             >
               <p>{request.approve}</p>

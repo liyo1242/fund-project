@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
-import { Card, Button } from 'antd'
+import { Card, Button, PageHeader } from 'antd'
 
 import classes from './fundraisingList.module.css'
 
@@ -10,14 +10,16 @@ interface FundraisingListProps {
 
 const FundraisingList = (props: PropsWithChildren<FundraisingListProps>) => (
   <>
-    <div className={classes.header}>
-      <h2>Fundraising List</h2>
-      <Link href={`/fundraising/new`}>
-        <Button type="primary">
-          <p>Add New Fundraising</p>
-        </Button>
-      </Link>
-    </div>
+    <PageHeader
+      title="Fundraising List"
+      extra={[
+        <Link key="1" href={`/fundraising/new`}>
+          <Button type="primary">
+            <p>Add New Fundraising</p>
+          </Button>
+        </Link>,
+      ]}
+    />
     <div className={classes.content}>
       {props.lists.map((list) => (
         <Link key={list} href={`/fundraising/${list}`}>

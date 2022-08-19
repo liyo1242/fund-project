@@ -4,11 +4,7 @@ import classes from './main-nav.module.css'
 const navLinks = [
   {
     path: '/',
-    text: 'About me',
-  },
-  {
-    path: '/posts',
-    text: 'Post',
+    text: 'Main',
   },
 ]
 

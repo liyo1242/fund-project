@@ -1,4 +1,4 @@
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Card } from 'antd'
 import { useState } from 'react'
 import useFundraising from '../hook/useFundraising'
 import { useRouter } from 'next/router'
@@ -22,41 +22,43 @@ const FundraisingRequestForm = () => {
   }
 
   return (
-    <Form
-      name="basic"
-      initialValues={{ remember: true }}
-      onFinish={handleAddFundraisingRequest}
-      onFinishFailed={handleAddFundraisingFailed}
-      autoComplete="off"
-    >
-      <Form.Item
-        label="description"
-        name="description"
-        rules={[{ required: true, message: 'Please input your funding request description!' }]}
+    <Card style={{ width: '50%', margin: 'auto' }}>
+      <Form
+        name="basic"
+        initialValues={{ remember: true }}
+        onFinish={handleAddFundraisingRequest}
+        onFinishFailed={handleAddFundraisingFailed}
+        autoComplete="off"
       >
-        <Input value={description} onChange={(event) => setDescription(event.target.value)} />
-      </Form.Item>
-      <Form.Item
-        label="costOfRequest"
-        name="costOfRequest"
-        rules={[{ required: true, message: 'Please input your funding request costOfRequest!' }]}
-      >
-        <Input value={costOfRequest} onChange={(event) => setCostOfRequest(event.target.value)} />
-      </Form.Item>
-      <Form.Item
-        label="recipient"
-        name="recipient"
-        rules={[{ required: true, message: 'Please input your funding request recipient!' }]}
-      >
-        <Input value={recipient} onChange={(event) => setRecipient(event.target.value)} />
-      </Form.Item>
+        <Form.Item
+          label="description"
+          name="description"
+          rules={[{ required: true, message: 'Please input your funding request description!' }]}
+        >
+          <Input value={description} onChange={(event) => setDescription(event.target.value)} />
+        </Form.Item>
+        <Form.Item
+          label="costOfRequest"
+          name="costOfRequest"
+          rules={[{ required: true, message: 'Please input your funding request costOfRequest!' }]}
+        >
+          <Input value={costOfRequest} onChange={(event) => setCostOfRequest(event.target.value)} />
+        </Form.Item>
+        <Form.Item
+          label="recipient"
+          name="recipient"
+          rules={[{ required: true, message: 'Please input your funding request recipient!' }]}
+        >
+          <Input value={recipient} onChange={(event) => setRecipient(event.target.value)} />
+        </Form.Item>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </Card>
   )
 }
 
